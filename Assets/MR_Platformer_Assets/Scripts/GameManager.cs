@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject winText;
     public static GameManager instance;
     public int coinsToCollect, coinsCollected = 0;
+    public bool won = false;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     {
         if(coinsCollected >= coinsToCollect)
         {
+            won = true;
             winText.SetActive(true);
         }
     }

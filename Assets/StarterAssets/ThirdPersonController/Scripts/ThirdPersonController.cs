@@ -435,5 +435,16 @@ namespace StarterAssets
                 print("HZ");
             }
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if(other.CompareTag("FinishLine"))
+            {
+                if(GameManager.instance.won)
+                {
+                    checkpoint = null;
+                }
+            }
+        }
     }
 }
