@@ -9,14 +9,20 @@ public class Platform : MonoBehaviour
     public Transform endPoint, startPoint;
     private Rigidbody rb;
 
+    private void Awake()
+    {
+        if(endPoint && startPoint)
+            direction = (endPoint.position - transform.position).normalized;
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
-        if (move)
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-        if (rotate)
-            rb.constraints = RigidbodyConstraints.FreezePosition;
+        //if (move)
+        //    rb.constraints = RigidbodyConstraints.FreezeRotation;
+        //if (rotate)
+        //    rb.constraints = RigidbodyConstraints.FreezePosition;
     }
 
     public float speed = 10f, checkDist = 0.01f;
@@ -28,18 +34,23 @@ public class Platform : MonoBehaviour
     public float rotationSpeed;
     private Vector3 destination, direction;
 
+    private void Update()
+    {
+        destCheckDelta += Time.deltaTime;
+    }
+
     private void FixedUpdate()
     {
         if (move)
         {
-            direction = (endPoint.position - transform.position).normalized;
-
+            rb.velocity = direction * speed * Time.fixedDeltaTime;
             if (Vector3.Distance(transform.position, endPoint.position) <= checkDist && destCheckDelta >= destinationCheck)
             {
                 transform.position = endPoint.position;
                 direction *= -1;
                 destCheckDelta = 0;
                 destination = startPoint.position;
+                return;
             }
             if (Vector3.Distance(transform.position, startPoint.position) <= checkDist && destCheckDelta >= destinationCheck)
             {
@@ -47,14 +58,13 @@ public class Platform : MonoBehaviour
                 direction *= -1;
                 destCheckDelta = 0;
                 destination = endPoint.position;
+                return;
             }
-            destCheckDelta += Time.fixedDeltaTime;
-            rb.velocity = direction * speed * Time.fixedDeltaTime;
         }
         if(rotate)
         {
-            //transform.Rotate(rotationAxis, rotationSpeed * Time.deltaTime);
-            rb.AddTorque(rotationAxis * rotationSpeed * Time.fixedDeltaTime);
+            transform.Rotate(rotationAxis, rotationSpeed * Time.deltaTime);
+            //rb.AddTorque(rotationAxis * rotationSpeed * Time.fixedDeltaTime);
         }   
     }
 }

@@ -400,6 +400,15 @@ namespace StarterAssets
         private Transform checkpoint;
         private void OnTriggerEnter(Collider other)
         {
+            if(other.CompareTag("FinishLine"))
+            {
+                GameManager.instance.Win();
+            }
+            if(other.CompareTag("Coin"))
+            {
+                other.gameObject.SetActive(false);
+                GameManager.instance.CoinCollected();
+            }
             if (other.CompareTag("Checkpoint"))
             {
                 checkpoint = other.transform;

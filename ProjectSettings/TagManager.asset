@@ -8,6 +8,8 @@ TagManager:
   - Platform
   - Checkpoint
   - Hazard
+  - Coin
+  - FinishLine
   layers:
   - Default
   - TransparentFX

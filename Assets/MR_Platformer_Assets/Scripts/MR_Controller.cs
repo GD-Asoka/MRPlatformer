@@ -34,5 +34,4 @@ public class MR_Controller : MonoBehaviour
         starterAssetsInputs.dash = dashing;
         starterAssetsInputs.SprintInput(sprint != 0);
     }
-
 }
